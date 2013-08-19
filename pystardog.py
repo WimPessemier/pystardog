@@ -12,7 +12,7 @@ Results are encapsulated in a :class:`ResultsParser` instance::
     >>>     print row
 """
 
-__version__ = "0.1"
+__version__ = "0.1.1"
 __author__ = "Huy Phan"
 __copyright__ = "Copyright 2007, The Cogent Project"
 __credits__ = ["Huy Phan"]
@@ -246,6 +246,8 @@ class StardogClient(object):
         """
         Set reasoning type, accepted values: 'DL', 'EL', 'QL', 'RL', 'RDFS', 'None' (default)
         """        
+        if not reasoning in REASONING_TYPES:
+            raise Exception("Invalid reasoning: '%s' (must be one of %s)" %(reasoning, REASONING_TYPES))
         self._reasoning = reasoning
         self.__update_connection_string()
 
@@ -267,7 +269,7 @@ class StardogClient(object):
         self._method = method
 
     def __update_connection_string(self):
-        self._http_headers['SD-Connection-String'] = "reasoning=%s;kb=%s" % (self._reasoning, self._database)
+        self._http_headers['SD-Connection-String'] = "reasoning=%s;kb=%s" % (str(self._reasoning).upper(), self._database)
 
     def query(self, sparql_query):
         """
