@@ -267,7 +267,7 @@ class StardogClient(object):
         self._method = method
 
     def __update_connection_string(self):
-        self._http_headers['SD-Connection-String'] = "reasoning=%s;kb=%s;persist=sync" % (self._reasoning, self._database)
+        self._http_headers['SD-Connection-String'] = "reasoning=%s;kb=%s" % (self._reasoning, self._database)
 
     def query(self, sparql_query):
         """
